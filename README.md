@@ -1,2 +1,0 @@
-# telegramm_bot
-
