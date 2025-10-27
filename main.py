@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 
 
 from handlers.start import router as start_router
-from handlers.pars_menu import router as pars_router
 from handlers.search_chat import router as search_chat_router
 
 
@@ -24,8 +23,8 @@ async def main():
         dp = Dispatcher()
 
         dp.include_router(start_router)
-        dp.include_router(pars_router)
         dp.include_router(search_chat_router)
+
 
         print("✅ Бот инициализирован")
         print("🔄 Запуск поллинг...")
