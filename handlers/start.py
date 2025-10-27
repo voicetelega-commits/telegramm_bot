@@ -15,16 +15,15 @@ async def cmd_start(message: types.Message):
 
 @router.callback_query(F.data == 'back_to_main')
 async def to_main_start(callback: types.CallbackQuery):
-    await callback.message.delete()
     menu_text = "Выберите функцию:"
-    await callback.message.answer(menu_text, reply_markup=get_main_keyboard())
+    await callback.message.edit_text(menu_text, reply_markup=get_main_keyboard())
     await callback.answer()
 
 
 
 @router.callback_query(F.data == 'search_chats')
 async def search_chats_handler(callback: types.CallbackQuery):
-    search_text = "Выберите тип чатов для поиска:"
+    search_text = "Выберите тип поиска:"
     await callback.message.edit_text(search_text, reply_markup=get_search_keyboard())
     await callback.answer()
 

@@ -1,6 +1,8 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
+from database.chats_db import chats_db
+
 
 
 # Главное меню
@@ -13,19 +15,35 @@ def get_main_keyboard() -> InlineKeyboardMarkup:
     builder.adjust(1)
     return builder.as_markup() 
 
-#Менюю поиска каналов
+
+#Менюю поиска чатов
 def get_search_keyboard() -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder() 
     builder.add(
-        InlineKeyboardButton(text='🔒 Приватные', callback_data='search_private'),
-        InlineKeyboardButton(text='🔓 Публичные', callback_data='search_public'),
-        InlineKeyboardButton(text='🌐 Все чаты', callback_data='search_all'),
+        InlineKeyboardButton(text='🧭 Поиск по категориям', callback_data='search_by_category'),
+        InlineKeyboardButton(text='🔑 Поиск по ключевым словам', callback_data='search_by_keyword'),
+        InlineKeyboardButton(text='🔥 Активные сообщества', callback_data='search_active'),
+        InlineKeyboardButton(text='➕ Добавить чат', callback_data='add_chat'),
         InlineKeyboardButton(text='◀️ Назад', callback_data='back_to_main'))
-    builder.adjust(2, 1, 1)
+    builder.adjust(1)
     return builder.as_markup() 
 
 
-#Фильтр парсинга 
+#Категории чатов
+def get_categories_keyboard() -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    categories = chats_db.get_all_categories()
+    for category in categories:
+        builder.add(InlineKeyboardButton(
+            text=category['name'], 
+            callback_data=category['id']))
+
+
+    builder.add(InlineKeyboardButton(text="◀️ Назад", callback_data="back_to_search"))
+    builder.adjust(2)  
+    return builder.as_markup() 
+
+#Фильтр парсинга участников
 def get_pars_user_keyboard() -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     builder.add(
